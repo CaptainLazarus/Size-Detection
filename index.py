@@ -14,6 +14,7 @@ def initArgs():
     parser = argparse.ArgumentParser()
     parser.add_argument("-i" , "--image" , help="Input Image" , required=True)
     parser.add_argument("-w" , "--width" , type=int , help="Width of Reference Object" , default=25)
+    parser.add_argument("-a" , "--area" , type=int , help="Min area of bounding box. Small value gives false positive. Big value ignores small objects." , default=25)
     return vars(parser.parse_args())
 
 if __name__ == "__main__":
@@ -34,7 +35,7 @@ if __name__ == "__main__":
     ratio = None
 
     for c in cnts:
-        if cv2.contourArea(c) < 25:
+        if cv2.contourArea(c) < args["area"]:
             continue
     
         orig = image.copy()
